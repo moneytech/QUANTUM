@@ -38,8 +38,8 @@ typedef enum int_format_flags_e
 typedef struct int_format_s
 {
   int_format_flags_t flags;
-  size_t pad;
-  size_t min;
+  uint pad;
+  uint min;
 } int_format_t;
 
 // -----------------------------------------------------------------------------
