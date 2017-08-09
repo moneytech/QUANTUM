@@ -26,9 +26,10 @@ invalid:
     d = chr_dig_to_int (c);
 
   #if T(SIGN) && CPU(TWOS_COMPLEMENT)
-    if (int_is_oflow_dig (val, T_MAXVAL + (flags & 0x1u), d))
+    if (int_will_oflow_dig (val, T_MAXVAL + (flags & 0x1u), d))
   #else
-    if (int_is_oflow_dig (val, T_MAXVAL, d))
+    if (int_can_oflow_dig (val, T_MAXVAL)
+    && int_will_oflow_dig (val, T_MAXVAL, d))
   #endif
     {
 overflow:
