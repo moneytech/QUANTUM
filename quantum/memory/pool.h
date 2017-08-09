@@ -60,7 +60,9 @@ struct mem_pool_link_s
   } var;
 };
 
-typedef struct mem_pool_s
+typedef struct mem_pool_s aligned(CPU_CACHE_LINE_SIZE) mem_pool_t;
+
+struct mem_pool_s
 {
   // Reserved
   void* ctx;
@@ -85,7 +87,7 @@ typedef struct mem_pool_s
   // to aid the CPU cache, but always comes before it in order not
   // to interfere with regular allocations.
   mem_pool_link_t* heap;
-} aligned(CPU_CACHE_LINE_SIZE) mem_pool_t;
+};
 
 // =============================================================================
 // Functions

@@ -1,7 +1,7 @@
 // =============================================================================
 // <swar.h>
 //
-// Various SWAR tricks that doesn't fall under any specific use case.
+// Assorted SWAR tricks.
 //
 // Copyright Kristian Garnét.
 // -----------------------------------------------------------------------------

@@ -107,6 +107,8 @@ static inline uf32 hash_fnv1a (const char_t* str, size_t len)
   return hash;
 }
 
+// -----------------------------------------------------------------------------
+// Vectorized variant
 static inline uf32 hash_fnv1a_fast (const char_t* str, size_t len)
 {
 #if CPU(UNALIGNED_ACCESS) && HAVE(INT32)

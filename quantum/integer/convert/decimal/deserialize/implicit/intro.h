@@ -28,8 +28,6 @@
       str++;                  \
       t_valid ({len++;});     \
     }                         \
-                              \
-    str = assume_aligned (2u, str);\
   }                           \
   else                        \
   {                           \
@@ -37,7 +35,7 @@
                               \
     t_valid ({len += (size_t)(ptr - str);});\
     int_from_str (val, str, ptr, {t_valid ({c = *str; goto invalid;}); goto done;});\
+  }                           \
                               \
-    str = assume_aligned (align, str);\
-  }       \
+  str = assume_aligned (align, str);\
 } while (0)

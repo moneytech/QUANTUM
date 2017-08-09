@@ -88,17 +88,17 @@
 // -----------------------------------------------------------------------------
 // Base 10 (decimal)
 #define int_can_oflow_dig(i, m) ((i) > (((m) - 9u) / 10u))
-#define int_is_oflow_dig(i, m, d) ((i) > (((m) - (d)) / 10u))
+#define int_will_oflow_dig(i, m, d) ((i) > (((m) - (d)) / 10u))
 
 // -----------------------------------------------------------------------------
 // Base 16 (hexadecimal)
 #define int_can_oflow_xdig(i, m) ((i) > (((m) - 15u) >> 4))
-#define int_is_oflow_xdig(i, m, d) ((i) > (((m) - (d)) >> 4))
+#define int_will_oflow_xdig(i, m, d) ((i) > (((m) - (d)) >> 4))
 
 // -----------------------------------------------------------------------------
 // Base 8 (octal)
 #define int_can_oflow_odig(i, m) ((i) > (((m) - 7u) >> 3))
-#define int_is_oflow_odig(i, m, d) ((i) > (((m) - (d)) >> 3))
+#define int_will_oflow_odig(i, m, d) ((i) > (((m) - (d)) >> 3))
 
 // -----------------------------------------------------------------------------
 

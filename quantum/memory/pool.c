@@ -267,7 +267,8 @@ void* mem_pool_alloc (mem_pool_t* pool, size_t size)
 }
 
 // -----------------------------------------------------------------------------
-// Allocate the object with flexible member (C99-like)
+// Allocate the object with flexible member in single allocation so that
+// the flexible part can be resized independently
 MEM_POOL_EXPORT
 void* mem_pool_alloc_flex (mem_pool_t* pool, size_t objsz, size_t bufsz)
 {
