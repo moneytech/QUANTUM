@@ -21,9 +21,6 @@
 // -----------------------------------------------------------------------------
 // #define CPU_PAGE_SIZE: explicitly set the CPU virtual page size hint.
 // -----------------------------------------------------------------------------
-// #define NO_CPU_TWOS_COMPLEMENT: if the target CPU doesn't use
-// the two's complement signed integers representation.
-// -----------------------------------------------------------------------------
 // #define NO_CPU_SIGN_EXTENSION: if the target CPU doesn't have
 // the arithmetic right shift.
 // -----------------------------------------------------------------------------
@@ -133,7 +130,7 @@
 // Signed integers handling
 // -----------------------------------------------------------------------------
 // Assume the CPU uses two's complement to represent signed integers
-#if !NO(CPU_TWOS_COMPLEMENT)
+#if (-1 == ~0)
   #define CPU_TWOS_COMPLEMENT
 #endif
 
