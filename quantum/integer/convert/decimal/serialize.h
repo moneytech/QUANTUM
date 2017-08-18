@@ -41,23 +41,6 @@ static const u16 int_sse_div100[8] aligned(16) = {REPEAT8 (0x147Bu)};
 
 static const u32 int_sse_mul10000[4] aligned(16) = {REPEAT4 (10000u)};
 static const u32 int_sse_div10000[4] aligned(16) = {REPEAT4 (0xD1B71759u)};
-
-static const u16 int_sse_div32[8] aligned(16) =
-{
-  8389u, 5243u, 13108u, 32768u, 8389u, 5243u, 13108u, 32768u
-};
-
-static const u16 int_sse_shr32[8] aligned(16) =
-{
-  1u << (16 - (23 + 2 - 16)),
-  1u << (16 - (19 + 2 - 16)),
-  1u << (16 - 1 - 2),
-  1u << 15,
-  1u << (16 - (23 + 2 - 16)),
-  1u << (16 - (19 + 2 - 16)),
-  1u << (16 - 1 - 2),
-  1u << 15
-};
 #endif // CPU(SSE2)
 
 // =============================================================================
@@ -326,8 +309,6 @@ static inline void int_to_dig4 (char_t* b, uf16 u)
 
 #if CPU(SSE2)
 
-  #if 1
-
 static void int_to_dig8 (char_t* b, u32 u)
 {
   const xi128 m10000 = _mm_loadu_si128 ((const xi128*)int_sse_mul10000);
@@ -362,42 +343,6 @@ static void int_to_dig8 (char_t* b, u32 u)
 
   _mm_storel_epi64 ((xi128*)b, x);
 }
-
-  #else
-
-static void int_to_dig8 (char_t* b, u32 u)
-{
-  const xi128 m10000 = _mm_loadu_si128 ((const xi128*)int_sse_mul10000);
-  const xi128 d10000 = _mm_loadu_si128 ((const xi128*)int_sse_div10000);
-
-  const xi128 div32 = _mm_loadu_si128 ((const xi128*)int_sse_div32);
-  const xi128 shr32 = _mm_loadu_si128 ((const xi128*)int_sse_shr32);
-
-  const xi128 m10 = _mm_loadu_si128 ((const xi128*)int_sse_mul10);
-
-  const xi128 z = _mm_loadu_si128 ((const xi128*)int_sse_asciiz);
-
-  xi128 x = _mm_cvtsi32_si128 (u);
-
-  xi128 q = _mm_srli_epi64 (_mm_mul_epu32 (x, d10000), 45);
-  xi128 r = _mm_sub_epi32 (x, _mm_mul_epu32 (q, m10000));
-
-  xi128 qr = _mm_unpacklo_epi16 (q, r);
-
-  qr = _mm_unpacklo_epi16 (qr, qr);
-  qr = _mm_unpacklo_epi32 (qr, qr);
-
-  qr = _mm_slli_epi64 (qr, 2);
-
-  qr = _mm_mulhi_epu16 (_mm_mulhi_epu16 (qr, div32), shr32);
-  qr = _mm_sub_epi16 (qr, _mm_slli_epi64 (_mm_mullo_epi16 (qr, m10), 16));
-
-  x = _mm_add_epi8 (_mm_packus_epi16 (qr, _mm_setzero_si128()), z);
-
-  _mm_storel_epi64 ((xi128*)b, x);
-}
-
-  #endif
 
 #else // CPU(SSE2) ][
 
